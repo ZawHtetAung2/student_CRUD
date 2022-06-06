@@ -42,7 +42,7 @@ if(isset($_POST['ok'])){
     $sdate = $_POST['sdate'];
     
     // echo $sname ."\n".$sage."\n".$sdate;
-    if($sage>0 and $sage<100){
+    if($sage>0){
     $sqli = "UPDATE $myTable
              SET $columns[1] = '$sname' , $columns[2]= '$sage', $columns[3]= '$sdate'
              WHERE $columns[0] = '$userID';";  
@@ -73,18 +73,18 @@ $mysqli -> close();
   <form method="post">
     <!-- Name Edit -->
     <div class="mb-3 mt-3">
-      <label for="email">Name:</label>
+      <label for="sname">Name:</label>
       <input type="text" class="form-control" id="sname" name="sname" value="<?php echo $row[$columns[1]]; ?>">
     </div>
     <!-- Age Edit -->
     <div class="mb-3 mt-3">
-      <label for="email">Age:</label>
-      <input type="text" class="form-control" id="sage" name="sage" value="<?php echo $row[$columns[2]]; ?>">
+      <label for="sage">Age:</label>
+      <input type="number" class="form-control" id="sage" name="sage" value="<?php echo $row[$columns[2]]; ?>">
     </div>
     <!-- Age Date -->
     <div class="mb-3 mt-3">
-      <label for="email">Age:</label>
-      <input type="text" class="form-control" id="sdate" name="sdate" value="<?php echo $row[$columns[3]]; ?>" >
+      <label for="sdate">Age:</label>
+      <input type="date" class="form-control" id="sdate" name="sdate" value="<?php echo $row[$columns[3]]; ?>" >
     </div>
     <!-- Button -->
     <button type="submit" class="btn btn-secondary" name="cancle">Cancle</button>
