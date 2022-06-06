@@ -33,7 +33,7 @@ if(isset($_POST['ok'])){
     $sage = (int)$_POST['sage'];
 
 
-    if($sage>0 and $sage<100){
+    if($sage>0){
       $sql = "insert into $myTable ($columns[1],$columns[2],$columns[3])    
               values('$sname','$sage',now())";  
     
@@ -69,7 +69,7 @@ if(isset($_POST['ok'])){
     <!-- Age input -->
     <div class="mb-3 mt-3">
       <label for="email">Age:</label>
-      <input type="text" class="form-control" id="sage" placeholder="Enter Age" name="sage">
+      <input type="number" class="form-control" id="sage" placeholder="Enter Age" name="sage">
     </div>
     <button type="submit" class="btn btn-secondary" name="cancle">Cancle</button>
     <button type="submit" class="btn btn-primary" name="ok">Create</button>
