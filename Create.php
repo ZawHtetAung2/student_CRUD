@@ -10,63 +10,71 @@
 
 <body>
 
-<nav class="navbar navbar-expand navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand btn btn-primary" href="StudentList.php">Home</a>
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-light" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-<br>
-<p>Creating new student list.</p>
-
-<form action="" method="post">
-    <!-- Name input -->
-    <div class="form-outline mb-4">
-        <label class="form-label"  for="sname" >Name</label>
-        <input type="text" name="sname" id="sname" placeholder="Name">
-    </div>
-    <!-- Age input -->
-    <div class="form-outline mb-4">
-        <label class="form-label"  for="sage" >Age</label>
-        <input type="text" name="sage" id="sage" placeholder="Age">
-    </div>
-     <!-- Age input -->
-    <div class="form-outline mb-4">
-        <label class="form-label"  for="sdate" >Date</label>
-        <input type="text" name="sdate" id="sdate" placeholder="YYYY-MM-DD">
-    </div>
-    <button type="submit" class="btn btn-secondary btn-block mb-4">Cancle</button>
-    <button type="submit" class="btn btn-primary  btn-block mb-4" name="ok">Create</button>
-</form>
-
 <?php 
 $username = "root"; 
 $password = ""; 
 $database = "school"; 
-$mysqli = new mysqli("localhost", $username, $password, $database); 
-$sql = "SELECT * FROM student_list";
+$myTable = "student_list";
 
-$column = array("ID", "Name", "Age", "Date");
+$mysqli = new mysqli("localhost", $username, $password, $database); 
+$sql = "SELECT * FROM $myTable";
+
+//request Header Row
+$res = $mysqli->query($sql);
+$values = $res->fetch_all(MYSQLI_ASSOC);
+$columns = array();
+if(!empty($values)){
+    $columns = array_keys($values[0]);
+}
 
 if(isset($_POST['ok'])){
     
     $sname = $_POST['sname'];
-    $sage = $_POST['sage'];
-    $sdate = $_POST['sdate'];
+    $sage = (int)$_POST['sage'];
 
-    $sql = "insert into student_list (Name,Age,Date)    
-           values('$sname','$sage','$sdate')";  
+
+    if($sage>0 and $sage<100){
+      $sql = "insert into $myTable ($columns[1],$columns[2],$columns[3])    
+              values('$sname','$sage',now())";  
     
-    $mysqli->query($sql);
-    header("Location:StudentList.php");
+              
+      $mysqli->query($sql);
+      header("Location:StudentList.php");
+    }else{
+      echo '<p>Age input type is wrong<p>';
+    }
+    
+}elseif(isset($_POST['cancle'])){
+  header("Location:StudentList.php");
 }
-
 ?>
 
-</form>
+<!-- Nav bar -->
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="StudentList.php">Home</a>
+  </div>
+</nav>
+ 
+<!-- Input Box-->
+<div class="container mt-3">
+  <h3>Creating new student list.</h3>
+
+  <form method="post">
+    <!-- Name input -->
+    <div class="mb-3 mt-3">
+      <label for="email">Name:</label>
+      <input type="text" class="form-control" id="sname" placeholder="Enter name" name="sname">
+    </div>
+    <!-- Age input -->
+    <div class="mb-3 mt-3">
+      <label for="email">Age:</label>
+      <input type="text" class="form-control" id="sage" placeholder="Enter Age" name="sage">
+    </div>
+    <button type="submit" class="btn btn-secondary" name="cancle">Cancle</button>
+    <button type="submit" class="btn btn-primary" name="ok">Create</button>
+  </form>
+</div>
 
 </body>
 </html>
