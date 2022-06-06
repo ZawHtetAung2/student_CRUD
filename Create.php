@@ -63,13 +63,13 @@ if(isset($_POST['ok'])){
   <form method="post">
     <!-- Name input -->
     <div class="mb-3 mt-3">
-      <label for="email">Name:</label>
+      <label for="sname">Name:</label>
       <input type="text" class="form-control" id="sname" placeholder="Enter name" name="sname">
     </div>
     <!-- Age input -->
     <div class="mb-3 mt-3">
       <label for="email">Age:</label>
-      <input type="number" class="form-control" id="sage" placeholder="Enter Age" name="sage">
+      <input type="sage" class="form-control" id="sage" placeholder="Enter Age" name="sage">
     </div>
     <button type="submit" class="btn btn-secondary" name="cancle">Cancle</button>
     <button type="submit" class="btn btn-primary" name="ok">Create</button>
